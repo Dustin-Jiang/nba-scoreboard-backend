@@ -15,10 +15,30 @@ app.get("/score/today", function (req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*')
 
-  dataStorage.get()
+  dataStorage.get("https://china.nba.com/static/data/scores/miniscoreboard.json")
   .then((result) => {
     res.send(modifier.today(result))
   })
+})
+
+app.get("/score/previous", function(req, res) {
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*')
+
+  dataStorage.get("https://china.nba.com/static/data/scores/miniscoreboard.json")
+  .then((result) => {
+    res.send(modifier.previous(result))
+  })
+})
+
+app.get("/score/next", function (req, res) {
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  dataStorage.get("https://china.nba.com/static/data/scores/miniscoreboard.json")
+    .then((result) => {
+      res.send(modifier.next(result));
+    });
 })
 
 app.listen(5000)
