@@ -15,15 +15,21 @@ function nbaParser(obj) {
 
   result.count = obj.gameCount;
   result.games = [];
+
   for (var i of obj.games) {
+    //To ignore the uncertain score
+    isFuture = (i.boxscore.statusDesc === null)
+
     game = {};
-    game.status = i.boxscore.statusDesc;
+    game.status = (isFuture) ? "未开始" : i.boxscore.statusDesc;
     game.homeTeam = i.homeTeam.profile;
     game.awayTeam = i.awayTeam.profile;
     game.score = {
-      homeScore: i.boxscore.homeScore,
-      awayScore: i.boxscore.awayScore,
-      winner: (i.boxscore.homeScore > i.boxscore.awayScore) ? "home" : "away"
+      //Replace the score in future with dash
+      homeScore: (isFuture) ? "--" : i.boxscore.homeScore,
+      awayScore: (isFuture) ? "--" : i.boxscore.awayScore,
+      winner: (isFuture) ? "" :
+        (i.boxscore.homeScore > i.boxscore.awayScore) ? "home" : "away"
     };
     result.games.push(game);
   }
