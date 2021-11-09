@@ -15,7 +15,7 @@ app.get("/score/today", function (req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*')
 
-  dataStorage.get("https://china.nba.com/static/data/scores/miniscoreboard.json")
+  dataStorage.get("https://china.nba.com/static/data/scores/miniscoreboardlive.json")
   .then((result) => {
     res.send(modifier.today(result))
   })
