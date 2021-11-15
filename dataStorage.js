@@ -13,9 +13,11 @@ exports.get = (url) => {
     if (time >= this.lastModify + 120000) {
       this.update(url).then((result) => {
         resolve(result);
-      }).reject((status) => reject(status));
+      }, (result) => {
+        reject(result)
+      });
     } else {
-      resolve(this.cache[url]).reject((status) => reject(status));
+      resolve(this.cache[url]);
     }
   });
 };
